@@ -1,0 +1,40 @@
+import seaborn as sns 
+import matplotlib.pyplot as plt 
+import pandas as pd 
+import numpy as np 
+
+miles_used = pd.read_csv('miles_used.csv')
+mileage = pd.DataFrame(miles_used)
+#renames all columns in the mileage dataframe
+mileage.columns = ['Transaction Date','Bkg No','Dest','Dep','Agent Id','Financial Amount','Comm Amnt','Miles Used']
+
+#lowers the name of all columns
+mileage.columns = [col.lower() for col in mileage]
+
+#describes the attribute 'dest'
+# print(mileage['dest'].describe())
+# print(mileage['dest'].value_counts().head(10))
+miles_only = mileage[['dest','dep','miles used']]
+
+def market_review(z):
+	if z >= "1000000":
+		return "big market"
+	else:
+		return "small market"
+
+miles_only['market_type']=miles_only['miles used'].apply(market_review)
+
+print(miles_only.head(5))
+
+# sns.set()
+# sns.relplot(x='dest',y='miles used',hue='market_type',data=miles_only);
+# plt.show()
+
+
+
+# tips = sns.load_dataset("tips")
+# sns.relplot(x="total_bill", y="tip", col="time",
+#             hue="smoker", style="smoker", size="size",
+#             data=tips);
+
+# plt.show()
